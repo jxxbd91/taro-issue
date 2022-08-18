@@ -1,0 +1,74 @@
+1. 创建项目： `taro init taro-demo`
+2. 交互式命令行选择框架:  `vue`
+3. 交互式命令行是否 `typescript`: 是 
+4. 交互式命令行选择css预处理器：`sass`
+5. 交互式命令行选择构建工具：`webpack5`
+6. 交互式命令行选择包管理工具：`pnpm`
+7. 交互式命令行选择模板源：`Gitee`
+8. 交互式命令行选择模板：`默认模板`
+9. 依赖安装
+10. 修改 `babel.config.js`
+```javascript
+module.exports = {
+  presets: [
+    ['taro', {
+      framework: 'vue',
+      ts: true,
+      vueJsx: {
+        compositionAPI: true
+      }
+    }]
+  ]
+}
+```
+11. 修改 `config/index.js`
+```javascript
+...
+compiler: {
+    type: 'webpack5',
+    prebundle: {
+      enable: false
+    }
+  },
+```
+11. 修改 `src/pages/index/index.vue`
+```javascript
+<script>
+import { defineComponent, ref } from 'vue'
+import { View } from '@tarojs/component'
+import './index.scss'
+
+export default defineComponent({
+  setup() {
+    const msg = ref('hello msg')
+
+    return () => <View>{msg.value}</View>
+  }
+})
+</script>
+```
+12. 开发调试微信小程序 `pnpm run dev:weapp`，可以正常展示内容
+13. 开发调试H5 `pnpm run dev:h5` 不可正常展示内容
+14. 修改 `src/pages/index/index.vue`
+```javascript
+<script>
+import { defineComponent, ref } from 'vue'
+// 注释下面一行代码
+// import { View } from '@tarojs/component'
+import './index.scss'
+
+export default defineComponent({
+  setup() {
+    const msg = ref('hello msg')
+
+    return () => <View>{msg.value}</View>
+  }
+})
+</script>
+```
+15.  开发调试微信小程序 `pnpm run dev:weapp`，不可正常展示内容
+16. 开发调试H5 `pnpm run dev:h5` 可正常展示内容
+
+> 从 taro 文档上看到一句话：在使用时，React 中我们需要先从 Taro 标准组件库 @tarojs/components 引用组件，再进行使用，例如使用 <View />、 <Text /> 组件，而 Vue 我们则无需引入
+
+这个就很矛盾了，有没有统一的使用 vue jsx 的方式
